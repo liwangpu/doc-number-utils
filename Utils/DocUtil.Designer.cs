@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DocUtil));
             this.label1 = new System.Windows.Forms.Label();
             this.txtSourcePath = new System.Windows.Forms.TextBox();
             this.btnSourceUpload = new System.Windows.Forms.Button();
@@ -61,7 +62,7 @@
             this.btnSourceUpload.Name = "btnSourceUpload";
             this.btnSourceUpload.Size = new System.Drawing.Size(75, 23);
             this.btnSourceUpload.TabIndex = 2;
-            this.btnSourceUpload.Text = "浏览";
+            this.btnSourceUpload.Text = "上传表格";
             this.btnSourceUpload.UseVisualStyleBackColor = true;
             this.btnSourceUpload.Click += new System.EventHandler(this.btnSourceUpload_Click);
             // 
@@ -123,10 +124,10 @@
             this.Controls.Add(this.btnSourceUpload);
             this.Controls.Add(this.txtSourcePath);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(398, 144);
             this.Name = "DocUtil";
-            this.ShowIcon = false;
             this.Text = "门类档案目录批量处理工具";
             this.Load += new System.EventHandler(this.Util_Load);
             this.ResumeLayout(false);

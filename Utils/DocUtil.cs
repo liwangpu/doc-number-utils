@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -14,6 +15,18 @@ namespace Utils
     {
         public DocUtil()
         {
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
+                string resourceName = new AssemblyName(args.Name).Name + ".dll";
+                string resource = Array.Find(this.GetType().Assembly.GetManifestResourceNames(), element => element.EndsWith(resourceName));
+
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resource))
+                {
+                    Byte[] assemblyData = new Byte[stream.Length];
+                    stream.Read(assemblyData, 0, assemblyData.Length);
+                    return Assembly.Load(assemblyData);
+                }
+            };
             InitializeComponent();
         }
 
@@ -33,7 +46,7 @@ namespace Utils
             {
                 txtSourcePath.Text = OpenFileDialog1.FileName;
                 btnTransfer.Enabled = true;
-                ShowMsg("表格已经上传,请进行数据处理");
+                ShowMsg("设置附件目录生成位置,进行数据处理");
             }
         }
 
@@ -51,7 +64,7 @@ namespace Utils
                         hssfwb = new HSSFWorkbook(file);
                     }
                     ISheet sheet = hssfwb.GetSheetAt(0);
-                    sheet.GetRow(0).GetCell(15).SetCellValue("档号");
+                    sheet.GetRow(0).CreateCell(15).SetCellValue("档号");
                     for (int row = 1; row <= sheet.LastRowNum; row++)
                     {
                         var currentRow = sheet.GetRow(row);
